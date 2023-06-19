@@ -1,0 +1,16 @@
+{
+  "name": "todoapplication",
+  "version": "1.0.0",
+  "description": "Simple to application using node js with the help of express js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon indx.js"
+  },
+  "author": "Sudipta jana (jisu)",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^7.3.0"
+  }
+}
