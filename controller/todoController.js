@@ -1,7 +1,6 @@
-const todoSchema = require('../model/schemas/todoSchema');
+const todoSchema = require("../model/schemas/todoSchema");
 const mongoose = require("mongoose");
-const Todo = new mongoose.model("Todos", todoSchema);
-
+const Todo = mongoose.model("Todo", todoSchema);
 
 // GET all the todos
 const getAllTodos = async (req, res) => {
@@ -128,6 +127,71 @@ const deleteTodoById = async (req, res) => {
   }
 };
 
+
+// GET ACTIVE TODOS 
+const getActiveTodoUsingAsync = async (req, res) => {
+  try {
+    const todo = new Todo();
+    const data = await todo.findActive();
+    res.status(200).json({ data });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      error: "There was a server-side error!!",
+    });
+  }
+};
+
+
+// GET ACTIVE TODOS Using Callback
+
+const getActiveTodoUsingCallback =  (req, res) => {
+  try {
+    const todo = new Todo();
+     todo.findActive((err, data) => {
+      res.status(200).json({ data });
+     });
+    
+  } catch (error) {
+    res.status(500).json({
+      error: "There was a server side error!",
+    });
+  }
+};
+
+
+// Find words- static methhods
+/**
+ * 
+ * @findWordsUsingStatic  find words meeting in title
+ *
+ */
+const findWordsUsingStatic = async (req, res) => {
+  try {
+    const data = await Todo.findWords();
+    res.status(200).json({ data });
+  } catch (error) {
+    res.status(500).json({
+      error: "There was a server side error!",
+    });
+  }
+}
+
+
+// Using query helpers
+const queryHelpers = async (req, res) => {
+  try {
+    const data = await Todo.find().byQery('complete');
+    res.status(200).json({ data });
+  } catch (error) {
+    res.status(500).json({
+      error: "There was a server-side error!",
+    });
+  }
+};
+
+
+
 module.exports = {
   getAllTodos,
   getTodoById,
@@ -135,4 +199,8 @@ module.exports = {
   insertMultipleTodos,
   updateTodoById,
   deleteTodoById,
+  getActiveTodoUsingAsync,
+  getActiveTodoUsingCallback,
+  findWordsUsingStatic,
+  queryHelpers
 };
