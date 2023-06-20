@@ -1,11 +1,13 @@
 const todoSchema = require("../model/schemas/todoSchema");
+const userSchema = require("../model/schemas/userSchema");
 const mongoose = require("mongoose");
 const Todo = mongoose.model("Todo", todoSchema);
+const User = mongoose.model("User", userSchema);
 
 // GET all the todos
 const getAllTodos = async (req, res) => {
   try {
-    const todos = await Todo.find({});
+    const todos = await Todo.find({}).populate("user", "name username -_id");
 
     res.status(200).json({
       message: "Todos retrieved successfully!",
@@ -43,8 +45,21 @@ const getTodoById = async (req, res) => {
 // INSERT one todo
 const insertTodo = async (req, res) => {
   try {
-    const newTodo = new Todo(req.body);
-    await newTodo.save();
+    const newTodo = new Todo({
+      ...req.body,
+      user: req.userId,
+    });
+    const todo = await newTodo.save();
+    await User.updateOne(
+      {
+        _id: req.userId,
+      },
+      {
+        $push: {
+          todos: todo._id,
+        },
+      }
+    );
     res.status(200).json({
       message: "Todo was inserted successfully!",
       todo: newTodo,
@@ -127,8 +142,7 @@ const deleteTodoById = async (req, res) => {
   }
 };
 
-
-// GET ACTIVE TODOS 
+// GET ACTIVE TODOS
 const getActiveTodoUsingAsync = async (req, res) => {
   try {
     const todo = new Todo();
@@ -142,16 +156,14 @@ const getActiveTodoUsingAsync = async (req, res) => {
   }
 };
 
-
 // GET ACTIVE TODOS Using Callback
 
-const getActiveTodoUsingCallback =  (req, res) => {
+const getActiveTodoUsingCallback = (req, res) => {
   try {
     const todo = new Todo();
-     todo.findActive((err, data) => {
+    todo.findActive((err, data) => {
       res.status(200).json({ data });
-     });
-    
+    });
   } catch (error) {
     res.status(500).json({
       error: "There was a server side error!",
@@ -159,10 +171,9 @@ const getActiveTodoUsingCallback =  (req, res) => {
   }
 };
 
-
 // Find words- static methhods
 /**
- * 
+ *
  * @findWordsUsingStatic  find words meeting in title
  *
  */
@@ -175,13 +186,12 @@ const findWordsUsingStatic = async (req, res) => {
       error: "There was a server side error!",
     });
   }
-}
-
+};
 
 // Using query helpers
 const queryHelpers = async (req, res) => {
   try {
-    const data = await Todo.find().byQery('complete');
+    const data = await Todo.find().byQery("complete");
     res.status(200).json({ data });
   } catch (error) {
     res.status(500).json({
@@ -189,8 +199,6 @@ const queryHelpers = async (req, res) => {
     });
   }
 };
-
-
 
 module.exports = {
   getAllTodos,
@@ -202,5 +210,5 @@ module.exports = {
   getActiveTodoUsingAsync,
   getActiveTodoUsingCallback,
   findWordsUsingStatic,
-  queryHelpers
+  queryHelpers,
 };

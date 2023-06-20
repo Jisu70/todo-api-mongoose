@@ -14,7 +14,7 @@ router.get("/", checkLogin, todoController.getAllTodos);
 router.get("/todos/:id", todoController.getTodoById);
 
 // INSERT one todo
-router.post("/todos", todoController.insertTodo);
+router.post("/todos", checkLogin, todoController.insertTodo);
 
 // INSERT multiple todos
 router.post("/todos/all", todoController.insertMultipleTodos);

@@ -14,6 +14,10 @@ const todoSchema = mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  user: {
+    type: mongoose.Types.ObjectId,
+    ref: "User",
+  },
 });
 
 /**
@@ -38,14 +42,12 @@ todoSchema.statics.findWords = function () {
   return this.find({ title: /meeting/i });
 };
 
-
 /**
  *  methods  Query helpers
- * @returns  that find words which was passing  in arguments 
+ * @returns  that find words which was passing  in arguments
  */
 todoSchema.query.byQery = function (language) {
   return this.find({ title: new RegExp(language, "i") });
 };
-
 
 module.exports = todoSchema;
