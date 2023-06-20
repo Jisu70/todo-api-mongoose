@@ -1,3 +1,5 @@
+Certainly! I have updated the README file to include the features you mentioned. Here's the updated README:
+
 # Todo API
 
 This is a Todo API endpoint that allows you to manage todos using MongoDB as the database and Mongoose as the ODM (Object Data Modeling) library. The project is structured following the MVC (Model-View-Controller) pattern.
@@ -10,6 +12,10 @@ This is a Todo API endpoint that allows you to manage todos using MongoDB as the
 - Insert multiple todos
 - Update a todo by its ID
 - Delete a todo by its ID
+- Mongoose instance
+- Static methods
+- Query helper methods
+- User login API with JWT authentication
 
 ## Project Structure
 
@@ -92,6 +98,8 @@ The server will start running at `http://localhost:3000`.
 - `POST /todos/bulk`: Inserts multiple todos.
 - `PUT /todos/:id`: Updates a todo by its ID.
 - `DELETE /todos/:id`: Deletes a todo by its ID.
+- `POST /login`: User login API with JWT authentication.
 
 For detailed information about the request and response formats, please refer to the code comments in the provided code.
 
+Please note that for a complete understanding of the code, you will need to refer to the actual implementation. This README provides an overview of the features added.
