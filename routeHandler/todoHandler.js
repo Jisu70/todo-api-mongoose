@@ -1,11 +1,14 @@
 // Dependencies
 const express = require("express");
 const router = express.Router();
-const todoController = require('../controller/todoController')
+const todoController = require('../controller/todoController') ;
+// Middleware
+const checkLogin = require('../middlewares/checkLogin')
+
 
 
 // GET all the todos
-router.get("/", todoController.getAllTodos);
+router.get("/", checkLogin, todoController.getAllTodos);
 
 // GET a single todo by ID
 router.get("/todos/:id", todoController.getTodoById);
@@ -24,13 +27,11 @@ router.delete("/todos/:id", todoController.deleteTodoById);
 
 // GET ACTIVE TODOS
 
-
 router.get("/active", todoController.getActiveTodoUsingAsync);
 
-
+//  GET ACTIVE TODOS using callback
 router.get("/active-callback", todoController.getActiveTodoUsingAsync);
 
-// Find words 
 
 //  Find words Using Async Await-static method
 router.get("/find-words", todoController.findWordsUsingStatic);
