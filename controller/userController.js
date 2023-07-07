@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const userSchema = require("../model/schemas/userSchema");
+const { route } = require("../routeHandler/todoHandler");
 const User = new mongoose.model("User", userSchema);
 
 
@@ -71,7 +72,24 @@ const loginRoute = async (req, res) => {
   }
 };
 
+// Get all users
+const getAllUser = async (req, res) => {
+  try {
+    const users = await User.find().populate("todos");
+    res.status(200).json({ message: users });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "There was a server side error" });
+  }
+};
+
+
+
+
+
+
 module.exports = {
   signupRoute,
   loginRoute,
+  getAllUser
 };

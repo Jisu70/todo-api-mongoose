@@ -26,21 +26,16 @@ router.put("/todos/:id", todoController.updateTodoById);
 router.delete("/todos/:id", todoController.deleteTodoById);
 
 // GET ACTIVE TODOS
-
 router.get("/active", todoController.getActiveTodoUsingAsync);
 
 //  GET ACTIVE TODOS using callback
-router.get("/active-callback", todoController.getActiveTodoUsingAsync);
-
+router.get("/active-callback", todoController.getActiveTodoUsingCallback);
 
 //  Find words Using Async Await-static method
 router.get("/find-words", todoController.findWordsUsingStatic);
 
-
-
 // GET  TODOS By Query helpers  
 router.get("/query-helpers", todoController.queryHelpers);
-
 
 // Exporting the router
 module.exports = router;
