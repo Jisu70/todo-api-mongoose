@@ -1,7 +1,7 @@
 
 # Todo API
 
-This is a Todo API endpoint that allows you to manage todos using MongoDB as the database and Mongoose as the ODM (Object Data Modeling) library. The project is structured following the MVC (Model-View-Controller) pattern.
+This is a Todo API endpoint that allows you to manage todos using MongoDB as the database and Mongoose as the ODM (Object Data Modeling) library. The project is structured following the MVC (Model-View-Controller) pattern .
 
 ## Features
 
